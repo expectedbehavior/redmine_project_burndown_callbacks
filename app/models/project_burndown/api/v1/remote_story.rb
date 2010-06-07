@@ -11,9 +11,10 @@ module ProjectBurndown
       "/api/v1/projects/#{prefix_options[:project_id]}/service_types/#{prefix_options[:service_type_id]}/remote_stories.xml?user_credentials=#{API_TOKEN}"
     end
     
-    def element_path(id, prefix_options = {}, query_options = nil)
+    def element_path(prefix_options = {}, query_options = nil)
+      self.attributes["remote_story_id"] ||= self.id
       prefix_options = prefix_options.merge!(@prefix_options)
-      "/api/v1/projects/#{prefix_options[:project_id]}/service_types/#{prefix_options[:service_type_id]}/remote_stories/#{id}.xml?user_credentials=#{API_TOKEN}"
+      "/api/v1/projects/#{prefix_options[:project_id]}/service_types/#{prefix_options[:service_type_id]}/remote_stories/#{self.attributes["remote_story_id"]}.xml?user_credentials=#{API_TOKEN}"
     end
   end
 end
