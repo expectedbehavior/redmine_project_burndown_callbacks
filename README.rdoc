@@ -4,17 +4,17 @@
 Installation
 ------------
 From the rails root of your redmine app installation
-    script/plugin install git@github.com:expectedbehavior/redmine_project_burndown_callbacks.git
-    rake db:migrate_plugins
+  script/plugin install git@github.com:expectedbehavior/redmine_project_burndown_callbacks.git
+  rake db:migrate_plugins
 
 
 Configuration and Usage
 -----------------------
 Save a copy of project_burndown.rb.example to your Redmine's config/initializers directory as projectburndown.rb. Edit the copied file to have the correct API_TOKEN string. That information can be found on your profile page in PB. Also edit it to have the correct SUBDOMAIN string.
 
-*If you use custom issue statuses*
-    return self.class::PB_FINISHED if ["Closed"].include?(status)
-    return self.class::PB_STARTED if ["In Progress", "Resolved", "Feedback", "Rejected"].include?(status)
+*If you use custom issue statuses, poke around for these lines. You will have to change them to use the statuses you utilize.*
+  return self.class::PB_FINISHED if ["Closed"].include?(status)
+  return self.class::PB_STARTED if ["In Progress", "Resolved", "Feedback", "Rejected"].include?(status)
 
 Restart your Redmine app server.
 
