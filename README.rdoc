@@ -1,4 +1,4 @@
-= project_burndown_callbacks
+= Project Burndown Callbacks for Redmine
 
 
 Installation
