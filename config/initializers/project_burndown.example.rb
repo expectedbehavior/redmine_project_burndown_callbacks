@@ -3,7 +3,7 @@ module ProjectBurndown
   class Config
     # grab the API Token from your profile page.
     API_TOKEN = "SOMETHING"
-    SUBDOMAIN = "expectedbehavior"
+    SUBDOMAIN = "example"
     
     def self.api_token
       API_TOKEN
