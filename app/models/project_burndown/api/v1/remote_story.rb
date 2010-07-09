@@ -1,7 +1,6 @@
 module ProjectBurndown
   class Api::V1::RemoteStory < ActiveResource::Base
-    #self.site = "http://#{ProjectBurndown::Config.subdomain}.projectburndown.com"
-    self.site = "http://#{ProjectBurndown::Config.subdomain}.pb.local:10000/api/v1/projects/:project_id/service_types/:service_type_id"
+    self.site = "http://#{ProjectBurndown::Config.subdomain}.projectburndown.com/api/v1/projects/:project_id/service_types/:service_type_id"
     self.element_name = "remote_story"
 
     def collection_path(prefix_options = {}, query_options = nil)
