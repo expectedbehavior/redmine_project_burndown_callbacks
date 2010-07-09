@@ -31,11 +31,20 @@ module RedmineProjectBurndownCallbacks
   
 
   module InstanceMethods
+    def project_burndown_project_id
+      pcf_id = ProjectCustomField.find_by_name("Project Burndown Project", :select => "id").id
+      project_burndown_project_id = CustomValue.find(:first, :conditions => { :customized_type => "Project", :custom_field_id => pcf_id, :customized_id => 1}).value.to_i
+      project_burndown_project_id <= 0 ? nil : project_burndown_project_id
+    end
+
     def push_to_project_burndown(status = Issue::PB_UNSTARTED)
-      remote_story = ProjectBurndown::Api::V1::RemoteStory.new
-      remote_story.attributes = { "current_state" => self.project_burndown_status, "id" => self.id, "name" => self.subject }
-      remote_story.prefix_options = { :project_id => 1, :service_type_id => "redmine" }
-      remote_story.save
+      pb_project_id = self.project_burndown_project_id
+      if pb_project_id
+        remote_story = ProjectBurndown::Api::V1::RemoteStory.new
+        remote_story.attributes = { "current_state" => self.project_burndown_status, "id" => self.id, "name" => self.subject }
+        remote_story.prefix_options = { :project_id => pb_project_id, :service_type_id => "redmine" }
+        remote_story.save
+      end
     end
 
     def create_project_burndown_story
@@ -47,10 +56,13 @@ module RedmineProjectBurndownCallbacks
     end
 
     def destroy_project_burndown_story
-      remote_story = ProjectBurndown::Api::V1::RemoteStory.new
-      remote_story.attributes = { "id" => self.id }
-      remote_story.prefix_options = { :project_id => 1, :service_type_id => "redmine" }
-      remote_story.destroy
+      pb_project_id = self.project_burndown_project_id
+      if pb_project_id
+        remote_story = ProjectBurndown::Api::V1::RemoteStory.new
+        remote_story.attributes = { "id" => self.id }
+        remote_story.prefix_options = { :project_id => pb_project_id, :service_type_id => "redmine" }
+        remote_story.destroy
+      end
     end
 
     # this will have to be configured here for the time being
