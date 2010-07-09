@@ -1,10 +1,12 @@
 = project_burndown_callbacks
 
+
 Installation
 ------------
 From the rails root of your redmine app installation
     script/plugin install git@github.com:expectedbehavior/redmine_project_burndown_callbacks.git
     rake db:migrate_plugins
+
 
 Configuration and Usage
 -----------------------
@@ -16,21 +18,31 @@ Save a copy of project_burndown.rb.example to your Redmine's config/initializers
 
 Restart your Redmine app server.
 
-There should now be a “Project Burndown Project” field in the settings for your projects. Into this you should enter the project id of the PB Project you want to push information to from this Redmine Project. The project id should be visible in the url for the project page on project burndown. It will look something like “https://yoursubdomain.projectburndown.com/projects/20043”. The 20043 part is the number we're after.
+There should now be a “Project Burndown Project” custom field in the settings for your projects. Into this you should enter the project id of the PB Project you want to push information to from this Redmine Project. The project id should be visible in the url for the project page on project burndown. It will look something like “https://yoursubdomain.projectburndown.com/projects/20043”. The 20043 part is the number we're after.
 Leave it blank if you don't want to push time entries and issues to PB for this Redmine project.
 
+There should also be a “Project Burndown User” custom field in the settings for your users. Into this you should enter the user id of users whose time entries you want to push to PB. This information can also be gathered from the profile pages by looking at the urls of the useres for your account.
+
 After entering the project id and saving your settings, you're good to go.
+
 Any new issues or time entries you create or update will get pushed to PB.
 
-Time Entries need to be associated with PB users.  The PB Account owner can go to his profile and select External Service Users from the sidebar to create these associations.
 
 Synching existing information
 -----------------------------
-script/console
-Project.all.map do |p|
+Synching will not work if you haven't gone through the configuration steps.
+
+If you want to control which projects are pushed:
+  script/console
+  p = Project.find_by_name("foo")
   p.issues.each{|i| i.push_to_project_burndown}
   p.time_entries.each{|t| t.push_to_project_burndown}
-end
+
+If you want to push everything:
+  script/console
+  Issue.sync_with_project_burndown
+  TimeEntry.sync_with_project_burndown
+
 
 TODO
 ----

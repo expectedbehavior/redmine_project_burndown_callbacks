@@ -12,7 +12,7 @@ module ProjectBurndown
     def element_path(prefix_options = {}, query_options = nil)
       self.attributes["remote_time_entry_id"] ||= self.id
       prefix_options = prefix_options.merge!(@prefix_options)
-      "/api/v1/projects/#{prefix_options[:project_id]}/service_types/#{prefix_options[:service_type_id]}/remote_time_entries/#{self.attributes["remote_story_id"]}.xml?user_credentials=#{ProjectBurndown::Config.api_token}"
+      "/api/v1/projects/#{prefix_options[:project_id]}/service_types/#{prefix_options[:service_type_id]}/remote_time_entries/#{self.attributes["remote_time_entry_id"]}.xml?user_credentials=#{ProjectBurndown::Config.api_token}"
     end
   end
 end

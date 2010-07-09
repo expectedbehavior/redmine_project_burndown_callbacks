@@ -7,9 +7,9 @@ module RedmineProjectBurndownCallbacks
     PB_UNSTARTED = "unstarted"
 
     def self.included(base)
-      base.extend(ClassMethods)
+      base.extend(IssueClassMethods)
       
-      base.send(:include, InstanceMethods)
+      base.send(:include, IssueInstanceMethods)
       
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
@@ -21,20 +21,21 @@ module RedmineProjectBurndownCallbacks
   end
   
 
-  module ClassMethods
+  module IssueClassMethods
     def sync_with_project_burndown
-      Issues.all.each do |issue|
+      Issue.all.each do |issue|
         issue.push_to_project_burndown
       end
     end
   end
   
 
-  module InstanceMethods
+  module IssueInstanceMethods
     def project_burndown_project_id
       pcf_id = ProjectCustomField.find_by_name("Project Burndown Project", :select => "id").id
-      project_burndown_project_id = CustomValue.find(:first, :conditions => { :customized_type => "Project", :custom_field_id => pcf_id, :customized_id => 1}).value.to_i
-      project_burndown_project_id <= 0 ? nil : project_burndown_project_id
+      pb_project_id = CustomValue.find(:first, :conditions => { :customized_type => "Project", :custom_field_id => pcf_id, :customized_id => self.project_id})
+      return nil if pb_project_id.blank?
+      pb_project_id.value.to_i
     end
 
     def push_to_project_burndown(status = Issue::PB_UNSTARTED)
@@ -61,7 +62,7 @@ module RedmineProjectBurndownCallbacks
         remote_story = ProjectBurndown::Api::V1::RemoteStory.new
         remote_story.attributes = { "id" => self.id }
         remote_story.prefix_options = { :project_id => pb_project_id, :service_type_id => "redmine" }
-        remote_story.destroy
+        remote_story.destroy rescue nil
       end
     end
 
