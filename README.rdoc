@@ -49,3 +49,4 @@ TODO
 There are only gonna happen if we get lots of requests, because it's kind of time-consuming:
 * Make configuration more dynamic and web-enabled
 * Make synching a button on projects
+* Better handling of trying to destroy things that don't exist at PB - currently I just rescue nil, which is awful
