@@ -12,10 +12,6 @@ Configuration and Usage
 -----------------------
 Save a copy of project_burndown.rb.example to your Redmine's config/initializers directory as projectburndown.rb. Edit the copied file to have the correct API_TOKEN string. That information can be found on your profile page in PB. Also edit it to have the correct SUBDOMAIN string.
 
-*If you use custom issue statuses, poke around for these lines. You will have to change them to use the statuses you utilize.*
-  return self.class::PB_FINISHED if ["Closed"].include?(status)
-  return self.class::PB_STARTED if ["In Progress", "Resolved", "Feedback", "Rejected"].include?(status)
-
 Restart your Redmine app server.
 
 There should now be a “Project Burndown Project” custom field in the settings for your projects. Into this you should enter the project id of the PB Project you want to push information to from this Redmine Project. The project id should be visible in the url for the project page on project burndown. It will look something like “https://yoursubdomain.projectburndown.com/projects/20043”. The 20043 part is the number we're after.
@@ -44,9 +40,16 @@ If you want to push everything:
   TimeEntry.sync_with_project_burndown
 
 
+Caveats
+-------
+If you use custom issue statuses, poke around for these lines. You will have to change them to use the statuses you utilize.
+  return self.class::PB_FINISHED if ["Closed"].include?(status)
+  return self.class::PB_STARTED if ["In Progress", "Resolved", "Feedback", "Rejected"].include?(status)
+
+
 TODO
 ----
 There are only gonna happen if we get lots of requests, because it's kind of time-consuming:
 * Make configuration more dynamic and web-enabled
 * Make synching a button on projects
-* Better handling of trying to destroy things that don't exist at PB - currently I just rescue nil, which is awful
+* Better handling of trying to destroy things that don't exist at PB - currently I just rescue nil, which is pretty bad.
