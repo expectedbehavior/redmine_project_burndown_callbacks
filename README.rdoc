@@ -26,19 +26,19 @@ Any new issues or time entries you create or update will get pushed to PB.
 Synching will not work if you haven't gone through the configuration steps.
 
 If you want to control which projects are pushed:
-  script/console
+  script/console production
   p = Project.find_by_name("foo")
   p.issues.each{|i| i.push_to_project_burndown}
   p.time_entries.each{|t| t.push_to_project_burndown}
 
 If you want to push everything:
-  script/console
+  script/console production
   Issue.sync_with_project_burndown
   TimeEntry.sync_with_project_burndown
 
 
 ==Caveats
-If you use custom issue statuses, poke around for these lines. You will have to change them to use the statuses you utilize.
+If you use custom issue statuses, poke around for these lines. You will have to change them to use the statuses you utilize. It will be in RAILS_ROOT/vendor/plugins/redmine_project_burndown_callbacks/lib/redmine_project_burndown_callbacks/issue_patch.rb
   return self.class::PB_FINISHED if ["Closed"].include?(status)
   return self.class::PB_STARTED if ["In Progress", "Resolved", "Feedback", "Rejected"].include?(status)
 
