@@ -10,7 +10,7 @@ From the rails root of your redmine app installation
 
 Configuration and Usage
 -----------------------
-Save a copy of project_burndown.rb.example to your Redmine's config/initializers directory as projectburndown.rb. Edit the copied file to have the correct API_TOKEN string. That information can be found on your profile page in PB. Also edit it to have the correct SUBDOMAIN string.
+Save a copy of RAILS_ROOT/vendor/plugins/redmine_project_burndown_callbacks/config/initializers/project_burndown.rb.example to RAILS_ROOT/config/initializers directory and name it projectburndown.rb. Edit the copied file to have the correct API_TOKEN string. That information can be found on your profile page in PB. Also edit it to have the correct SUBDOMAIN string.
 
 Restart your Redmine app server.
 
@@ -53,3 +53,4 @@ There are only gonna happen if we get lots of requests, because it's kind of tim
 * Make configuration more dynamic and web-enabled
 * Make synching a button on projects
 * Better handling of trying to destroy things that don't exist at PB - currently I just rescue nil, which is pretty bad.
+* Better handling of general errors in syncing with PB.  Right now if something goes wrong, you'll get 500s in redmine.
