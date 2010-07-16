@@ -2,14 +2,12 @@
 
 
 ==Installation
-------------
 From the rails root of your redmine app installation
   script/plugin install git@github.com:expectedbehavior/redmine_project_burndown_callbacks.git
   rake db:migrate_plugins
 
 
 ==Configuration and Usage
------------------------
 Save a copy of RAILS_ROOT/vendor/plugins/redmine_project_burndown_callbacks/config/initializers/project_burndown.rb.example to RAILS_ROOT/config/initializers directory and name it projectburndown.rb. Edit the copied file to have the correct API_TOKEN string. That information can be found on your profile page in PB. Also edit it to have the correct SUBDOMAIN string.
 
 Restart your Redmine app server.
@@ -25,7 +23,6 @@ Any new issues or time entries you create or update will get pushed to PB.
 
 
 ==Synching existing information
------------------------------
 Synching will not work if you haven't gone through the configuration steps.
 
 If you want to control which projects are pushed:
@@ -41,14 +38,12 @@ If you want to push everything:
 
 
 ==Caveats
--------
 If you use custom issue statuses, poke around for these lines. You will have to change them to use the statuses you utilize.
   return self.class::PB_FINISHED if ["Closed"].include?(status)
   return self.class::PB_STARTED if ["In Progress", "Resolved", "Feedback", "Rejected"].include?(status)
 
 
 ==TODO
-----
 There are only gonna happen if we get lots of requests, because it's kind of time-consuming:
 * Make configuration more dynamic and web-enabled
 * Make synching a button on projects
