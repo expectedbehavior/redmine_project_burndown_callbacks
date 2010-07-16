@@ -17,7 +17,7 @@ Restart your Redmine app server.
 There should now be a “Project Burndown Project” custom field in the settings for your projects. Into this you should enter the project id of the PB Project you want to push information to from this Redmine Project. The project id should be visible in the url for the project page on project burndown. It will look something like {https://yoursubdomain.projectburndown.com/projects/20043}[https://yoursubdomain.projectburndown.com/projects/20043]. The 20043 part is the number we're after.
 Leave it blank if you don't want to push time entries and issues to PB for this Redmine project.
 
-There should also be a “Project Burndown User” custom field in the settings for your users. Into this you should enter the user id of users whose time entries you want to push to PB. This information can also be gathered from the profile pages by looking at the urls of the uses for your account.
+There should also be a “Project Burndown User” custom field in the settings for your users. Into this you should enter the user id of users whose time entries you want to push to PB. This information can also be gathered from the profile pages by looking at the urls of the users for your account.
 
 After entering the project id and saving your settings, you're good to go.
 
