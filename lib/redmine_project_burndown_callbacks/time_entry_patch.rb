@@ -26,14 +26,14 @@ module RedmineProjectBurndownCallbacks
     def project_burndown_project_id
       pcf_id = ProjectCustomField.find_by_name("Project Burndown Project", :select => "id").id
       pb_project_id = CustomValue.find(:first, :conditions => { :customized_type => "Project", :custom_field_id => pcf_id, :customized_id => self.project_id})
-      return nil if pb_project_id.blank?
+      return nil if (pb_project_id.blank? || pb_project_id.value.blank?)
       pb_project_id.value.to_i
     end
     
     def project_burndown_user_id
       pcf_id = UserCustomField.find_by_name("Project Burndown User", :select => "id").id
       pb_user_id = CustomValue.find(:first, :conditions => { :customized_type => "Principal", :custom_field_id => pcf_id, :customized_id => self.user_id})
-      return nil if pb_user_id.blank?
+      return nil if (pb_user_id.blank? || pb_user_id.value.blank?)
       pb_user_id.value.to_i
     end
 

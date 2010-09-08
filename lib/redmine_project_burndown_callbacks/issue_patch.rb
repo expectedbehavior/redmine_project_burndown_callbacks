@@ -34,7 +34,7 @@ module RedmineProjectBurndownCallbacks
     def project_burndown_project_id
       pcf_id = ProjectCustomField.find_by_name("Project Burndown Project", :select => "id").id
       pb_project_id = CustomValue.find(:first, :conditions => { :customized_type => "Project", :custom_field_id => pcf_id, :customized_id => self.project_id})
-      return nil if pb_project_id.blank?
+      return nil if (pb_project_id.blank? || pb_project_id.value.blank?)
       pb_project_id.value.to_i
     end
 
